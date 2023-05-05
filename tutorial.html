@@ -72,9 +72,9 @@ There's only 8 ways to win in TicTacToe, so we won't bother being smart about it
 <code>
 function isWinningMove(board, pos)<br>
 &nbsp board[pos] = 'X'<br>
-&nbsp if (board[0] == board[1] and board[1] == board[2]) or<br>
-&nbsp&nbsp&nbsp&nbsp (board[3] == board[4] and board[4] == board[5]) or<br>
-&nbsp&nbsp&nbsp&nbsp (board[6] == board[7] and board[7] == board[8]) or<br>
+&nbsp if (board[1] == board[2] and board[2] == board[3]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[4] == board[5] and board[5] == board[6]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[7] == board[8] and board[8] == board[9]) or<br>
 &nbsp&nbsp&nbsp&nbsp (board[1] == board[4] and board[4] == board[7]) or<br>
 &nbsp&nbsp&nbsp&nbsp (board[2] == board[5] and board[5] == board[8]) or<br>
 &nbsp&nbsp&nbsp&nbsp (board[3] == board[6] and board[6] == board[9]) or<br>
@@ -92,9 +92,9 @@ this function returns, the board is changed in the calling function as well. We 
 <code>
 function isWinningMove(board, pos)<br>
 &nbsp board[pos] = 'X'<br>
-&nbsp if (board[0] == board[1] and board[1] == board[2]) or<br>
-&nbsp&nbsp&nbsp&nbsp (board[3] == board[4] and board[4] == board[5]) or<br>
-&nbsp&nbsp&nbsp&nbsp (board[6] == board[7] and board[7] == board[8]) or<br>
+&nbsp if (board[1] == board[2] and board[2] == board[3]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[4] == board[5] and board[5] == board[6]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[7] == board[8] and board[8] == board[9]) or<br>
 &nbsp&nbsp&nbsp&nbsp (board[1] == board[4] and board[4] == board[7]) or<br>
 &nbsp&nbsp&nbsp&nbsp (board[2] == board[5] and board[5] == board[8]) or<br>
 &nbsp&nbsp&nbsp&nbsp (board[3] == board[6] and board[6] == board[9]) or<br>
@@ -126,9 +126,9 @@ Overall, our AI should now look something like:<br><br>
 <code>
 function isWinningMove(board, pos)<br>
 &nbsp board[pos] = 'X'<br>
-&nbsp if (board[0] == board[1] and board[1] == board[2]) or<br>
-&nbsp&nbsp&nbsp&nbsp (board[3] == board[4] and board[4] == board[5]) or<br>
-&nbsp&nbsp&nbsp&nbsp (board[6] == board[7] and board[7] == board[8]) or<br>
+&nbsp if (board[1] == board[2] and board[2] == board[3]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[4] == board[5] and board[5] == board[6]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[7] == board[8] and board[8] == board[9]) or<br>
 &nbsp&nbsp&nbsp&nbsp (board[1] == board[4] and board[4] == board[7]) or<br>
 &nbsp&nbsp&nbsp&nbsp (board[2] == board[5] and board[5] == board[8]) or<br>
 &nbsp&nbsp&nbsp&nbsp (board[3] == board[6] and board[6] == board[9]) or<br>

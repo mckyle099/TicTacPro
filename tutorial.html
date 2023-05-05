@@ -109,11 +109,11 @@ function isWinningMove(board, pos)<br>
 end<br>
 </code><br>
 
-Now we have a function that can check if a move is winning or not, so we should call it from our getMove function<br><br>
+Now we have a function that can check if a move is winning or not, so we should call it from our getMove function. We only want to call it on empty squares though.<br><br>
 <code>
 function getMove(board)<br>
 &nbsp for i=1,9 do<br>
-&nbsp&nbsp&nbsp if isWinningMove(board, i) then<br>
+&nbsp&nbsp&nbsp if board[i] == '\0' and isWinningMove(board, i) then<br>
 &nbsp&nbsp&nbsp&nbsp&nbsp return i<br>
 &nbsp&nbsp&nbsp end<br>
 &nbsp end<br>
@@ -145,7 +145,7 @@ end<br>
 
 function getMove(board)<br>
 &nbsp for i=1,9 do<br>
-&nbsp&nbsp&nbsp if isWinningMove(board, i) then<br>
+&nbsp&nbsp&nbsp if board[i] == '\0' and isWinningMove(board, i) then<br>
 &nbsp&nbsp&nbsp&nbsp&nbsp return i<br>
 &nbsp&nbsp&nbsp end<br>
 &nbsp end<br>

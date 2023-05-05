@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>TicTacPro - Tutorial</title>
+  </head>
+  <body style="text-align: left; padding: 0; border: 0; margin: 10;">
+  <h1> Intro </h1>
+   You begin the game with a function defined in the text area called getMove.<br>
+       This is a very simple function that loops from 1 to 9 looking for the first square that hasn't been chosen yet. <br>
+	   It is meant to show how to check the board squares for X, O, and empty.<br>
+	   Every time it is your AIs turn to play, your getMove function will be called, which should return a number between 1 and 9 that hasn't been taken yet
+  <h1> So how do I make it better? </h1>
+   You can define an "order" of moves to play by doing something like this:<br>
+  <code><br>
+function getMove(board)<br>
+&nbsp if board[1] == '\0' then<br>
+&nbsp&nbsp&nbsp return 1<br>
+&nbsp end<br>
+&nbsp if board[9] == '\0' then<br>
+&nbsp&nbsp return 9<br>
+&nbsp end<br>
+&nbsp if board[3] == '\0' then<br>
+&nbsp&nbsp&nbsp return 3<br>
+&nbsp end<br>
+&nbsp if board[7] == '\0' then<br>
+&nbsp&nbsp&nbsp return 7<br>
+&nbsp end<br>
+&nbsp if board[8] == '\0' then<br>
+&nbsp&nbsp&nbsp return 8<br>
+&nbsp end<br>
+&nbsp if board[2] == '\0' then<br>
+&nbsp&nbsp&nbsp return 2<br>
+&nbsp end<br>
+&nbsp if board[6] == '\0' then<br>
+&nbsp&nbsp&nbsp return 6<br>
+&nbsp end<br>
+&nbsp if board[4] == '\0' then<br>
+&nbsp&nbsp&nbsp return 4<br>
+&nbsp end<br>
+&nbsp if board[5] == '\0' then<br>
+&nbsp&nbsp&nbsp return 5<br>
+&nbsp end<br>
+end<br>
+  </code><br>
+But this is a very boring "static" solution, we can do better by making decisions more dynamically.<br>
+<h1>Check if we have a winning move</h1>
+  The first thing you probably want to do is check if you have any moves that will win the game. It's a good idea to define a function that will do this for us.<br>
+  Let's call this function isWinningMove and let's pass it the board and a position as parameters<br><br>
+<code>
+function isWinningMove(board, pos)<br>
+<br>
+end<br>
+</code><br>
+Now we need to fill it in. We can temporarily set the board at pos to our symbol<br><br>
+<code>
+function isWinningMove(board, pos)<br>
+&nbsp board[pos] = 'X'<br>
+end<br>
+</code><br>
+Note that this assumes we're playing as X. The game doesn't tell us what symbol we're playing as. A good AI should be able to play as either X or O. Can you figure out a way to programmatically
+determine which symbol your AI is playing as?
+<label for="hints">Hint</label>
+<select name="hints" id="cars">
+  <option value="blank"></option>
+  <option value="hint">Even/Odd number of played squares</option>
+</select>
+<a href="https://mckyle099.github.io/TicTacPro/solution1.html">Solution</a><br><br>
+Now that we've temporarily assigned our symbol to the board at the given position, we just need to check if we've won.
+There's only 8 ways to win in TicTacToe, so we won't bother being smart about it<br><br>
+<code>
+function isWinningMove(board, pos)<br>
+&nbsp board[pos] = 'X'<br>
+&nbsp if (board[0] == board[1] and board[1] == board[2]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[3] == board[4] and board[4] == board[5]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[6] == board[7] and board[7] == board[8]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[1] == board[4] and board[4] == board[7]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[2] == board[5] and board[5] == board[8]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[3] == board[6] and board[6] == board[9]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[1] == board[5] and board[5] == board[9]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[3] == board[5] and board[5] == board[7])<br>
+&nbsp then<br>
+&nbsp&nbsp&nbsp return true<br>
+&nbsp end<br>
+&nbsp return false<br>
+end<br>
+</code><br>
+
+We've made a mistake, do you know what it is? We set the board[pos] to 'X', but we didn't unset it. Lua passes arrays (our board) by reference instead of by value, so once
+this function returns, the board is changed in the calling function as well. We need to undo our change. <br><br>
+<code>
+function isWinningMove(board, pos)<br>
+&nbsp board[pos] = 'X'<br>
+&nbsp if (board[0] == board[1] and board[1] == board[2]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[3] == board[4] and board[4] == board[5]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[6] == board[7] and board[7] == board[8]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[1] == board[4] and board[4] == board[7]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[2] == board[5] and board[5] == board[8]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[3] == board[6] and board[6] == board[9]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[1] == board[5] and board[5] == board[9]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[3] == board[5] and board[5] == board[7])<br>
+&nbsp then<br>
+&nbsp&nbsp&nbsp board[pos] = '\0'<br>
+&nbsp&nbsp&nbsp return true<br>
+&nbsp end<br>
+&nbsp board[pos] = '\0'<br>
+&nbsp return false<br>
+end<br>
+</code><br>
+
+Now we have a function that can check if a move is winning or not, so we should call it from our getMove function<br><br>
+<code>
+function getMove(board)<br>
+&nbsp for i=1,9 do<br>
+&nbsp&nbsp&nbsp if isWinningMove(board, i) then<br>
+&nbsp&nbsp&nbsp&nbsp&nbsp return i<br>
+&nbsp&nbsp&nbsp end<br>
+&nbsp end<br>
+end<br>
+</code><br>
+
+Note that we still need to add logic to select a square if there isn't a winning move.<br>
+Overall, our AI should now look something like:<br><br>
+
+<code>
+function isWinningMove(board, pos)<br>
+&nbsp board[pos] = 'X'<br>
+&nbsp if (board[0] == board[1] and board[1] == board[2]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[3] == board[4] and board[4] == board[5]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[6] == board[7] and board[7] == board[8]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[1] == board[4] and board[4] == board[7]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[2] == board[5] and board[5] == board[8]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[3] == board[6] and board[6] == board[9]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[1] == board[5] and board[5] == board[9]) or<br>
+&nbsp&nbsp&nbsp&nbsp (board[3] == board[5] and board[5] == board[7])<br>
+&nbsp then<br>
+&nbsp&nbsp&nbsp board[pos] = '\0'<br>
+&nbsp&nbsp&nbsp return true<br>
+&nbsp end<br>
+&nbsp board[pos] = '\0'<br>
+&nbsp return false<br>
+end<br>
+<br>
+
+function getMove(board)<br>
+&nbsp for i=1,9 do<br>
+&nbsp&nbsp&nbsp if isWinningMove(board, i) then<br>
+&nbsp&nbsp&nbsp&nbsp&nbsp return i<br>
+&nbsp&nbsp&nbsp end<br>
+&nbsp end<br>
+&nbsp for i=1,9 do<br>
+&nbsp&nbsp&nbsp if board[i] == '\0' then<br>
+&nbsp&nbsp&nbsp&nbsp&nbsp return i<br>
+&nbsp&nbsp&nbsp end<br>
+&nbsp end<br>
+end<br>
+</code><br>
+It's still not that smart, but it's at least a bit smarter. The next thing you probably want to do is to check if the opponent is 1 move away from winning, and if so, block them.
+  </body>
+</html>

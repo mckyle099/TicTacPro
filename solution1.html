@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en-us">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <title>TicTacPro - Tutorial</title>
+  </head>
+  <body style="text-align: left; padding: 0; border: 0; margin: 10;">
+If we're called first, there will be 0 (even number) squares played, and we are X<br>
+If we're called second, there will be 1 (odd number) square played, and we are O<br>
+If we're called third, there will be 2 (even number) squares played, and we are X<br>
+...etc<br>
+As you can see, for any given turn, if there's an even number of squares played, we're X, otherwise we're O<br>
+
+  <code><br>
+function getSymbol(board)<br>
+&nbsp count = 0<br>
+&nbsp for i=1,9 do<br>
+&nbsp&nbsp&nbsp if board[i] != '\0' then<br>
+&nbsp&nbsp&nbsp&nbsp&nbsp count = count + 1<br>
+&nbsp&nbsp&nbsp end<br>
+&nbsp end<br>
+&nbsp if count % 2 == 0 then<br>
+&nbsp&nbsp&nbsp return 'X'<br>
+&nbsp else<br>
+&nbsp&nbsp&nbsp return 'O'<br>
+&nbsp end<br>
+end<br>
+  </code><br>
+We use the modulo operator (%) to divide by 2 and check for remainder.
+
+
+
+  </body>
+</html>
